@@ -1,1 +1,113 @@
-# Jogo-da-mem-ria---Animais
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Memória - Animais</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #282c34;
+            color: white;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(5, 100px); /* 5 colunas */
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .card {
+            width: 100px;
+            height: 100px;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .card.flipped {
+            color: black;
+            background-color: #fff;
+            transform: rotateY(180deg);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .card:active {
+            transform: scale(0.98);
+        }
+
+        .card.disabled {
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Jogo da Memória - Animais</h1>
+    <div class="game-board" id="gameBoard"></div>
+
+    <script>
+        const animals = ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐯", "🐨", "🦊", "🐻", "🐱", "🐶", "🐭", "🐹", "🐰", "🐼", "🐯", "🐨"];
+        let shuffledAnimals = animals.sort(() => Math.random() - 0.5);
+        let selectedCards = [];
+        let matchedPairs = 0;
+
+        const gameBoard = document.getElementById("gameBoard");
+
+        function createBoard() {
+            shuffledAnimals.forEach(animal => {
+                const card = document.createElement("div");
+                card.classList.add("card");
+                card.textContent = animal;
+                card.addEventListener("click", () => flipCard(card));
+                gameBoard.appendChild(card);
+            });
+        }
+
+        function flipCard(card) {
+            if (selectedCards.length < 2 && !card.classList.contains("flipped") && !card.classList.contains("disabled")) {
+                card.classList.add("flipped");
+                selectedCards.push(card);
+                if (selectedCards.length === 2) {
+                    disableCards();
+                    setTimeout(checkMatch, 500);
+                }
+            }
+        }
+
+        function disableCards() {
+            selectedCards.forEach(card => card.classList.add("disabled"));
+        }
+
+        function checkMatch() {
+            if (selectedCards[0].textContent === selectedCards[1].textContent) {
+                matchedPairs++;
+                if (matchedPairs === animals.length / 2) {
+                    alert("Parabéns! Você encontrou todos os pares!");
+                    location.reload();
+                }
+            } else {
+                selectedCards.forEach(card => card.classList.remove("flipped"));
+            }
+            selectedCards.forEach(card => card.classList.remove("disabled"));
+            selectedCards = [];
+        }
+
+        createBoard();
+    </script>
+
+</body>
+</html>
