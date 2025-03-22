@@ -10,10 +10,12 @@
             text-align: center;
             background-color: #282c34;
             color: white;
+            margin: 0;
+            padding: 0;
         }
 
         h1 {
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
 
         .game-board {
@@ -21,6 +23,7 @@
             grid-template-columns: repeat(5, 100px); /* 5 colunas */
             gap: 10px;
             justify-content: center;
+            margin-top: 20px;
         }
 
         .card {
@@ -51,6 +54,57 @@
 
         .card.disabled {
             pointer-events: none;
+        }
+
+        /* Media Query para telas menores (celular) */
+        @media (max-width: 600px) {
+            .game-board {
+                grid-template-columns: repeat(4, 80px); /* 4 colunas em telas pequenas */
+            }
+
+            .card {
+                width: 80px;
+                height: 80px;
+                font-size: 18px; /* Fonte menor */
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+        }
+
+        /* Media Query para telas muito pequenas (ex: celulares muito pequenos) */
+        @media (max-width: 400px) {
+            .game-board {
+                grid-template-columns: repeat(3, 70px); /* 3 colunas em telas muito pequenas */
+            }
+
+            .card {
+                width: 70px;
+                height: 70px;
+                font-size: 16px; /* Fonte ainda menor */
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+        }
+
+        /* Media Query para telas grandes (PCs) */
+        @media (min-width: 1024px) {
+            .game-board {
+                grid-template-columns: repeat(6, 100px); /* 6 colunas para telas grandes */
+            }
+
+            .card {
+                width: 100px;
+                height: 100px;
+                font-size: 24px;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
         }
     </style>
 </head>
